@@ -1,0 +1,7 @@
+<div class="elevator-container">
+  <app-elevator-status></app-elevator-status>
+  <div>
+    <app-elevator class="elevator" *ngFor="let elevator of elevators" [elevator]="elevator"></app-elevator>
+    <button class="add-button" (click)="addElevator()">Dodaj windę</button>
+  </div>
+</div>

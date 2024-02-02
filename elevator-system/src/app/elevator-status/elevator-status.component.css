@@ -1,0 +1,13 @@
+.elevator-container {
+    display: flex;
+    flex-direction: column; /* Ustawienie kierunku na kolumnę, aby elementy były pionowo */
+    align-items: flex-start; /* Ustawienie wyśrodkowania wertykalnego do lewej strony */
+    margin-left: 20px; /* Dodatkowy margines po lewej stronie (możesz dostosować według potrzeb) */
+  }
+  
+  .elevator {
+    width: 200px; /* Dostosuj szerokość windy według potrzeb */
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px 0; /* Dodatkowy margines na górze i na dole, aby oddzielić windy */
+  }

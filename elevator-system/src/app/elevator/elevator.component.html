@@ -1,0 +1,15 @@
+<div>
+  <h3>Winda {{ elevator.id }}</h3>
+  <p>Aktualne piętro: {{ elevator.currentFloor }}</p>
+  <p>Cel: {{ elevator.targetFloor }}</p>
+  <div *ngFor="let people of elevator.inside">
+    <p>Jestem w środku!</p>
+    <p>Cel: {{people.targetFloor}}</p>
+</div>
+  <div *ngFor="let people of elevator.queue">
+        <p>Wsiadam: {{people.waitingFloor}}</p>
+        <p>Cel: {{people.targetFloor}}</p>
+  </div>
+  <button (click)="simulateStep()">Symuluj ruch</button>
+  <button (click)="addToQueue()">Dodaj Oczekującego</button>
+</div>
