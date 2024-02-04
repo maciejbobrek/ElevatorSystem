@@ -19,4 +19,9 @@ export class AppComponent {
   addElevator() {
     this.elevatorDataService.createElevator();
   }
+  simulateAll(){
+    for (var elevator of this.elevators){
+      this.elevatorDataService.simulateStep(elevator.id);
+    }
+  }
 }

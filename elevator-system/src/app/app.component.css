@@ -1,5 +1,13 @@
-
+#container{
+  display: flex;
+  justify-content: space-evenly;
+  top:3.8rem;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 2rem;
+}
   .add-button {
+    margin-top: 50px;
     background-color: #4caf50;
     color: white;
     border: none;
@@ -15,4 +23,9 @@
   
   .add-button:hover {
     background-color: #45a049;
+  }
+
+  #status-container{
+    height: 100px;
+
   }

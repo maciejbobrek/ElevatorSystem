@@ -1,15 +1,62 @@
-<div>
-  <h3>Winda {{ elevator.id }}</h3>
-  <p>Aktualne piętro: {{ elevator.currentFloor }}</p>
-  <p>Cel: {{ elevator.targetFloor }}</p>
-  <div *ngFor="let people of elevator.inside">
+<div id="box" class="containter">
+  <div class="row">
+    <div class="col">
+      <p>Elevator {{ elevator.id }}</p>
+    </div>
+    <div id="floor" class="col">
+      <p> Floor: {{elevator.currentFloor}}</p>
+    </div>
+  </div>
+  <div id="floor" class="row" *ngFor="let i of getFloorsArray()">
+    <div class="col">
+      <div id="ident" class="row">
+        <div class="col">
+          <p>{{ i}}</p>
+        </div>
+        <div id="buttons" class="col">
+        <button *ngIf="i<getFloors()-1" [ngStyle]="{'background-color':SomeOneUp(i)? 'orange':'gray'}" (click)="addToQueueFromFloor(i,false)"  class="btn-sm">
+          <i class="fa-sharp fa-solid fa-arrow-up"></i>
+        </button>
+        <button *ngIf="i>0" [ngStyle]="{'background-color':SomeOneDown(i)? 'orange':'gray'}" (click)="addToQueueFromFloor(i,true)" class="btn-sm">
+          <i class="fa-sharp fa-solid fa-arrow-down"></i>
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div id="person" class="col" *ngFor="let person of getPeopleOnFloor(i) ; let j = index;">
+        <div id="person-wrapper">
+          <p id="floor_number">{{person.targetFloor}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div [ngStyle]="{'transform':i==elevator.currentFloor? 'scale(100%)':'scale(0)'}" id="elevator" class="col">
+      <div class="row">
+        <div id="person-inside" class="col-3" *ngFor="let person of elevator.inside; let j = index;">
+          <div id="person-inside-wrapper">
+            <p id="floor_number">{{person.targetFloor}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<button (click)="simulateStep()">Symuluj ruch</button>
+<button (click)="addToQueue()">Dodaj Oczekującego</button>
+</div>
+<!-- <div *ngFor="let people of elevator.inside">
     <p>Jestem w środku!</p>
     <p>Cel: {{people.targetFloor}}</p>
 </div>
   <div *ngFor="let people of elevator.queue">
         <p>Wsiadam: {{people.waitingFloor}}</p>
         <p>Cel: {{people.targetFloor}}</p>
-  </div>
-  <button (click)="simulateStep()">Symuluj ruch</button>
-  <button (click)="addToQueue()">Dodaj Oczekującego</button>
-</div>
+  </div> -->

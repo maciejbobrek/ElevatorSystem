@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ElevatorComponent } from './elevator/elevator.component';
 import { ElevatorStatusComponent } from './elevator-status/elevator-status.component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -14,7 +13,7 @@ import { ElevatorStatusComponent } from './elevator-status/elevator-status.compo
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
