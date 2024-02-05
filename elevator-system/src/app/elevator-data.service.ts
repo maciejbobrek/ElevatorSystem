@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Elevator } from './elevator.types';
 import { Person } from './person.type';
 import { BehaviorSubject } from 'rxjs';
+import { ElevatorComponent } from './elevator/elevator.component';
 
 @Injectable({
   providedIn: 'root'
@@ -54,15 +55,37 @@ export class ElevatorDataService {
     this.elevatorsSubject.next(updatedElevators);
   }
   calculateTargetFloor(elevator: Elevator): number | null {
+    let isLiftGoingUp=this.isGoingUp(elevator.currentFloor,elevator.targetFloor);
+    const allPeople = [...elevator.queue, ...elevator.inside];
+    const maxTargetFloor = Math.max(...elevator.inside.map(person => person.targetFloor),...elevator.queue.map(person => person.waitingFloor));
+    const minTargetFloor =Math.min(...elevator.inside.map(person => person.targetFloor),...elevator.queue.map(person => person.waitingFloor));
+    // console.log("max"+maxTargetFloor)
+    // console.log("min"+minTargetFloor)
+    // console.log(elevator.targetFloor)
+    // console.log(isLiftGoingUp)
     if (elevator.inside.length == 0 && elevator.queue.length == 0) {
-      return 0;
+      return elevator.currentFloor;
+    }    
+    else if (elevator.targetFloor == elevator.currentFloor&&maxTargetFloor<elevator.currentFloor){
+        return minTargetFloor;
     }
-    else if (elevator.inside.length == 0 && elevator.queue.length > 0) {
-      return elevator.queue[0].waitingFloor;
+    else if (elevator.targetFloor == elevator.currentFloor&&minTargetFloor>elevator.currentFloor) {
+      return maxTargetFloor;
     }
-    else if (elevator.queue.length == 0 && elevator.inside.length > 0) {
-      return elevator.inside[0].targetFloor;
+    else if (elevator.targetFloor != elevator.currentFloor && allPeople &&isLiftGoingUp) {
+      return maxTargetFloor;
     }
+    else if (elevator.targetFloor != elevator.currentFloor && allPeople &&!isLiftGoingUp) {
+      return minTargetFloor;
+    }
+    
+    // // else if (elevator.inside.length == 0 && elevator.queue.length>0 && isLiftGoingUp) {
+    // //   return maxTargetFloor;
+    // // }
+    // // else if (elevator.inside.length == 0 && elevator.queue.length>0 && !isLiftGoingUp) {
+    // //   return minTargetFloor;
+    // }
+
 
     return null;
   }
@@ -79,6 +102,7 @@ export class ElevatorDataService {
       if (newTargetFloor !== null) {
         elevator.targetFloor = newTargetFloor;
       }
+      console.log(newTargetFloor)
       this.notifyDataChange(updatedElevators);
     } else {
       console.error(`Winda o ID ${id} nie została znaleziona.`);
@@ -95,19 +119,20 @@ export class ElevatorDataService {
       const updatedElevators = [...currentElevators];
       const elevator = updatedElevators[elevatorIndex];
       const hoppingInPeople = this.hoppingIn(elevator, elevator.currentFloor)
+      const  hopppingWithDirection = hoppingInPeople?.filter(person => this.isGoingUp(person.waitingFloor,person.targetFloor)===this.isGoingUp(elevator.currentFloor,elevator.targetFloor)||person.waitingFloor===elevator.targetFloor);
       const hoppingOffPeople = this.hoppingOff(elevator, elevator.currentFloor)
-      if (hoppingInPeople) {
-        elevator.inside.push(...hoppingInPeople);
-        elevator.queue = elevator.queue.filter(person => !hoppingInPeople.some(p => p.id === person.id));
-        console.log("Going In" + hoppingInPeople)
+      console.log(hopppingWithDirection)
+      if (hopppingWithDirection&&elevator.inside.length<this.max_people_inside) {
+        elevator.inside.push(...hopppingWithDirection);
+        elevator.queue = elevator.queue.filter(person => !hopppingWithDirection.some(p => p.id === person.id));
         this.updateTargetFloor(elevator.id)
       }
-      else if (hoppingOffPeople) {
+      if (hoppingOffPeople) {
         elevator.inside = elevator.inside.filter(person => !hoppingOffPeople.some(p => p.id === person.id));
         console.log("hopping Off" + hoppingOffPeople)
         this.updateTargetFloor(elevator.id)
       }
-      else {
+      if((!hopppingWithDirection && !hoppingOffPeople)||elevator.inside.length==this.max_people_inside){
         const NextFloor = this.calculateNextFloor(elevator)
         if (NextFloor !== null) {
           elevator.currentFloor = NextFloor;
@@ -118,18 +143,17 @@ export class ElevatorDataService {
       console.error(`Winda o ID ${id} nie została znaleziona.`);
     }
   }
+  isGoingUp(current:number,target:number): boolean{
+    return current<target;
+  }
   calculateNextFloor(elevator: Elevator): number | null {
-    console.log(elevator.targetFloor);
-    console.log(elevator.currentFloor);
-    if (elevator.targetFloor == elevator.currentFloor) {
-      return elevator.currentFloor;
-    }
-    else if (elevator.targetFloor < elevator.currentFloor) {
+    if (elevator.targetFloor < elevator.currentFloor) {
       return elevator.currentFloor - 1;
     }
-    else {
+    else if(elevator.targetFloor > elevator.currentFloor)  {
       return elevator.currentFloor + 1;
     }
+    return elevator.currentFloor;
   }
   hoppingOff(elevator: Elevator, n: number): Array<Person> | null {
     const currentFloor = n;
@@ -141,9 +165,9 @@ export class ElevatorDataService {
   hoppingIn(elevator: Elevator, n: number): Array<Person> | null {
     const currentFloor = n;
 
-    const personsGettingOff = elevator.queue.filter(person => person.waitingFloor === currentFloor);
+    const personsGettingIN = elevator.queue.filter(person => person.waitingFloor === currentFloor);
 
-    return personsGettingOff.length > 0 ? personsGettingOff : null;
+    return personsGettingIN.length > 0 ? personsGettingIN : null;
   }
   SomeOneUp(elevator: Elevator, n: number): boolean {
     const queue = elevator.queue.filter(person => person.waitingFloor === n)
