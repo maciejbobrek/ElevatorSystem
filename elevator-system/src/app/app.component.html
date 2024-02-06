@@ -1,11 +1,12 @@
 <div>
-  <button class="add-button" (click)="addElevator()">Dodaj windę</button>
-  <button class="add-button" (click)="simulateAll()">Symuluj Wszystkie</button>
-  <div id="container">
-  <app-elevator-status  class="row"></app-elevator-status>
-  </div>
+  <button class="add-button" (click)="addElevator()">Add Elevator With People</button>
+  <button class="add-button" (click)="addElevatorWithoutPeople()">Add Elevator Without People</button>
+  <button class="add-button" (click)="simulateAll()">Simulate All</button>
   <div id="container">
     <app-elevator class="elevator" *ngFor="let elevator of elevators" [elevator]="elevator"></app-elevator>
+  </div>
+  <div id="container">
+    <app-elevator-without-people class="elevator" *ngFor="let elevator of elevators_without" [elevator]="elevator"></app-elevator-without-people>
   </div>
   
 </div>

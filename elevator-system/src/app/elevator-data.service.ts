@@ -1,10 +1,8 @@
 
 import { Injectable } from '@angular/core';
-import { Elevator } from './elevator.types';
+import { Elevator } from './elevator.type';
 import { Person } from './person.type';
-import { BehaviorSubject } from 'rxjs';
-import { ElevatorComponent } from './elevator/elevator.component';
-
+import { BehaviorSubject, max } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -55,21 +53,21 @@ export class ElevatorDataService {
     this.elevatorsSubject.next(updatedElevators);
   }
   calculateTargetFloor(elevator: Elevator): number | null {
+    let wasgoingup=false;
     let isLiftGoingUp=this.isGoingUp(elevator.currentFloor,elevator.targetFloor);
     const allPeople = [...elevator.queue, ...elevator.inside];
     const maxTargetFloor = Math.max(...elevator.inside.map(person => person.targetFloor),...elevator.queue.map(person => person.waitingFloor));
     const minTargetFloor =Math.min(...elevator.inside.map(person => person.targetFloor),...elevator.queue.map(person => person.waitingFloor));
     // console.log("max"+maxTargetFloor)
     // console.log("min"+minTargetFloor)
-    // console.log(elevator.targetFloor)
-    // console.log(isLiftGoingUp)
+    // console.log("isgoingup"+isLiftGoingUp)
     if (elevator.inside.length == 0 && elevator.queue.length == 0) {
       return elevator.currentFloor;
     }    
-    else if (elevator.targetFloor == elevator.currentFloor&&maxTargetFloor<elevator.currentFloor){
-        return minTargetFloor;
+    else if (elevator.targetFloor == elevator.currentFloor&&(maxTargetFloor<elevator.currentFloor||minTargetFloor<elevator.currentFloor&&wasgoingup)){
+      return minTargetFloor;
     }
-    else if (elevator.targetFloor == elevator.currentFloor&&minTargetFloor>elevator.currentFloor) {
+    else if (elevator.targetFloor == elevator.currentFloor&&(minTargetFloor>elevator.currentFloor||maxTargetFloor>elevator.currentFloor&&!wasgoingup)) {
       return maxTargetFloor;
     }
     else if (elevator.targetFloor != elevator.currentFloor && allPeople &&isLiftGoingUp) {
@@ -78,15 +76,7 @@ export class ElevatorDataService {
     else if (elevator.targetFloor != elevator.currentFloor && allPeople &&!isLiftGoingUp) {
       return minTargetFloor;
     }
-    
-    // // else if (elevator.inside.length == 0 && elevator.queue.length>0 && isLiftGoingUp) {
-    // //   return maxTargetFloor;
-    // // }
-    // // else if (elevator.inside.length == 0 && elevator.queue.length>0 && !isLiftGoingUp) {
-    // //   return minTargetFloor;
-    // }
-
-
+    wasgoingup=isLiftGoingUp;
     return null;
   }
   updateTargetFloor(id: number): void {
@@ -118,22 +108,22 @@ export class ElevatorDataService {
     if (elevatorIndex !== -1) {
       const updatedElevators = [...currentElevators];
       const elevator = updatedElevators[elevatorIndex];
-      const hoppingInPeople = this.hoppingIn(elevator, elevator.currentFloor)
-      const  hopppingWithDirection = hoppingInPeople?.filter(person => this.isGoingUp(person.waitingFloor,person.targetFloor)===this.isGoingUp(elevator.currentFloor,elevator.targetFloor)||person.waitingFloor===elevator.targetFloor);
+      const hopppingWithDirection = this.hoppingWithDirection(elevator,elevator.currentFloor)
       const hoppingOffPeople = this.hoppingOff(elevator, elevator.currentFloor)
       console.log(hopppingWithDirection)
       if (hopppingWithDirection&&elevator.inside.length<this.max_people_inside) {
         elevator.inside.push(...hopppingWithDirection);
         elevator.queue = elevator.queue.filter(person => !hopppingWithDirection.some(p => p.id === person.id));
+        console.log("in")
         this.updateTargetFloor(elevator.id)
       }
       if (hoppingOffPeople) {
         elevator.inside = elevator.inside.filter(person => !hoppingOffPeople.some(p => p.id === person.id));
-        console.log("hopping Off" + hoppingOffPeople)
         this.updateTargetFloor(elevator.id)
       }
-      if((!hopppingWithDirection && !hoppingOffPeople)||elevator.inside.length==this.max_people_inside){
+      if((!hopppingWithDirection)||elevator.inside.length==this.max_people_inside){
         const NextFloor = this.calculateNextFloor(elevator)
+        console.log("skip")
         if (NextFloor !== null) {
           elevator.currentFloor = NextFloor;
         }
@@ -168,6 +158,13 @@ export class ElevatorDataService {
     const personsGettingIN = elevator.queue.filter(person => person.waitingFloor === currentFloor);
 
     return personsGettingIN.length > 0 ? personsGettingIN : null;
+  }
+  hoppingWithDirection(elevator: Elevator, n: number): Array<Person> | null {
+    const currentFloor = n;
+
+    const personsGettingIN = elevator.queue.filter(person => person.waitingFloor === currentFloor);
+    const peopleWithDirection=personsGettingIN?.filter(person => this.isGoingUp(person.waitingFloor,person.targetFloor)===this.isGoingUp(elevator.currentFloor,elevator.targetFloor)||person.waitingFloor===elevator.targetFloor);
+    return peopleWithDirection.length > 0 ? peopleWithDirection : null;
   }
   SomeOneUp(elevator: Elevator, n: number): boolean {
     const queue = elevator.queue.filter(person => person.waitingFloor === n)

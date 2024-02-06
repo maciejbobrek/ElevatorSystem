@@ -1,4 +1,4 @@
-import { Elevator } from './../elevator.types';
+import { Elevator } from '../elevator.type';
 import { Component, OnInit } from '@angular/core';
 import { ElevatorDataService } from '../elevator-data.service';
 

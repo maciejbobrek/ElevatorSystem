@@ -1,10 +1,10 @@
 <div id="box" class="containter">
   <div class="row">
     <div class="col">
-      <p>Elevator {{ elevator.id }}</p>
+      <p>Elevator With People {{ elevator.id }}</p>
     </div>
     <div id="floor" class="col">
-      <p> Floor: {{elevator.currentFloor}}</p>
+      <p> Floor:  {{elevator.currentFloor}}  Target :  {{elevator.targetFloor}} </p>
     </div>
   </div>
   <div id="floor" class="row" *ngFor="let i of getFloorsArray()">
