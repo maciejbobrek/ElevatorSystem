@@ -1,7 +1,6 @@
 
 import { Injectable } from '@angular/core';
-import { Elevator } from './elevator.type';
-import { Person } from './person.type';
+import { Elevator, Person } from './elevator.type';
 import { BehaviorSubject, max } from 'rxjs';
 @Injectable({
   providedIn: 'root'
@@ -98,9 +97,7 @@ export class ElevatorDataService {
       console.error(`Winda o ID ${id} nie została znaleziona.`);
     }
   }
-  observeElevatorChanges(callback: (elevators: Elevator[]) => void): void {
-    this.elevators$.subscribe(callback);
-  }
+
   simulateStep(id: number) {
     const currentElevators = this.elevatorsSubject.getValue();
     const elevatorIndex = currentElevators.findIndex(e => e.id === id);

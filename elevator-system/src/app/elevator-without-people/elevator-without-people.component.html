@@ -1,0 +1,47 @@
+<div id="box" class="containter">
+  <div class="row">
+    <div class="col">
+      <p>Elevator {{ elevator.id }}</p>
+    </div>
+    <div id="floor" class="col">
+      <p> Floor: {{elevator.currentFloor}} Target : {{elevator.targetFloor}} </p>
+    </div>
+  </div>
+  <div id="floor" class="row" *ngFor="let i of getFloorsArray()">
+    <div class="col">
+      <div id="ident" class="row">
+        <div class="col">
+          <p>{{ i}}</p>
+        </div>
+        <div id="buttons" class="col">
+          <button *ngIf="i<getFloors()-1" [ngStyle]="{'background-color': isthereRequest(i,true)? 'orange':'gray'}"
+            (click)="addRequest(i,true)" class="btn-sm">
+            <i class="fa-sharp fa-solid fa-arrow-up"></i>
+          </button>
+          <button *ngIf="i>0" [ngStyle]="{'background-color': isthereRequest(i,false)? 'orange':'gray'}"
+            (click)="addRequest(i,false)" class="btn-sm">
+            <i class="fa-sharp fa-solid fa-arrow-down"></i>
+          </button>
+        </div>
+      </div>
+      <div class="row">
+      </div>
+    </div>
+    <div class="col">
+      <div [ngStyle]="{'transform':i==elevator.currentFloor? 'scale(100%)':'scale(0)'}" id="elevator" class="col">
+        <div class="row">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-1" *ngFor="let i of getFloorsArray()">
+      <button [ngStyle]="{'background-color': checkIfInTargets(i)? 'orange':'gray'}" (click)="addToTargets(i)" type="button" class="btn btn-primary" data-toggle="button"
+        aria-pressed="false" autocomplete="off">
+        {{getFloorsArray().length-i-1}}
+      </button>
+    </div>
+  </div>
+  <button (click)="simulateStep()">Symuluj ruch</button>
+
+</div>

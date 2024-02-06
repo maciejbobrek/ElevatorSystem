@@ -1,8 +1,7 @@
 // elevator.component.ts
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { ElevatorDataService } from '../elevator-data.service';
-import { Elevator } from '../elevator.type';
-import { Person } from '../person.type';
+import { Elevator, Person } from '../elevator.type';
 @Component({
   selector: 'app-elevator',
   templateUrl: './elevator.component.html',
