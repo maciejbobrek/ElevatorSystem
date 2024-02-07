@@ -19,6 +19,13 @@ npm install
 ng serve
 ```
 Open http://localhost:4200/ on your desktop
+## Obsługa
+Opis przycisków menu strony
+- Add Elevator - dodaje windę odopwiedniego typu na stronę
+- Step Simulation - wykonuje krok symulacji dla całego systemu
+- Start Simulation - zaczyna symulacje - step jest automatycznie wykonywany co 1,5 sekundy
+- Add Person - dodaje Person na losowym piętrze jadącego na losowe piętro ( Model 2)
+- Przycisk Góra/Dół na piętrze - w modelu 1 jest to przycisk działąjacy jak w zwykłej windzie, w modelu 2 dodaje nam osobe w kolejce na piętrzy i losuje piętro destynacji w odpowiednia strone
 
 
 ## Modele 
