@@ -1,6 +1,6 @@
 # Elevator System
 
-Project is deployed [here](https://github.com/maciejbobrek/ElevatorSystem)
+Project is deployed [here](https://maciejbobrek.github.io/ElevatorSystem/)
 
 
 Elevator System to aplikacja Webowa napisana w Angularze. System posiada 2 komponenty i 2 serwisy
