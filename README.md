@@ -63,7 +63,7 @@ export interface Elevator {
 ```
 ## Algorytm
 Winda jeździ góra dół, i nigdy nie zawraca. Czyli jeśli pierwszy przycisk na zewnątrz lub w środku został kliknięty winda zaczyna jechać w górę lub w dół. Winda zawsze odwiedza najwyższe piętro docelowe i jedzie w dół na najniższe piętro. Winda nie
-bierze osób(w przypadku pierwszego modelu nie usuwa Requestu z piętra), jeśli jedzie w kierunku przeciwnym niż osoba chce jechać. Usuwa to problem zapychania windy przez osoby nie jadące w dobra stronę.
+bierze osób(w przypadku pierwszego modelu nie usuwa Requestu z piętra), jeśli jedzie w kierunku przeciwnym niż osoba chce jechać. Usuwa to problem zapychania windy przez osoby nie jadące w dobra stronę. Taki algorytm nigdy nie doprowadzi do styuacji czekania bardzo długo na windę. Winda po zakończeniu wszystkich zleceń zostaje na piętrze.
 
 
 
