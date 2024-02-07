@@ -1,4 +1,8 @@
 # Elevator System
+
+Project is deployed [here](https://github.com/maciejbobrek/ElevatorSystem)
+
+
 Elevator System to aplikacja Webowa napisana w Angularze. System posiada 2 komponenty i 2 serwisy
 - elevator - odpowiada za model windy z ludźmi
 - elevator-without-people - model windy bez ludzi
