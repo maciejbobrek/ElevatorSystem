@@ -76,4 +76,7 @@ export class ElevatorComponent implements OnInit {
   SomeOneDown(n:number):boolean{
     return this.elevatorDataService.SomeOneDown(this.elevator,n);
   }
+  deleteElevator(){
+    this.elevatorDataService.deleteElevator(this.elevator.id)
+  }
 }

@@ -47,4 +47,7 @@ export class ElevatorWithoutPeopleComponent {
   checkIfInTargets(n:number):boolean{
     return this.elevatorDataService.checkIfInTargets(this.elevator,n);
   }
+  deleteElevator(){
+    this.elevatorDataService.deleteElevator(this.elevator.id)
+  }
 }

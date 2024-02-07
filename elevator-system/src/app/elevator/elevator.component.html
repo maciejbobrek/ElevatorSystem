@@ -49,8 +49,10 @@
 
 
 
-<button (click)="simulateStep()">Symuluj ruch</button>
-<button (click)="addToQueue()">Dodaj Oczekującego</button>
+<button id="secondbutton" (click)="simulateStep()">Simulate Move</button>
+<button id="secondbutton" (click)="addToQueue()">Add Person</button>
+<button id="secondbutton" (click)="deleteElevator()" style="background-color: red;">Delete Elevator</button>
+
 </div>
 <!-- <div *ngFor="let people of elevator.inside">
     <p>Jestem w środku!</p>

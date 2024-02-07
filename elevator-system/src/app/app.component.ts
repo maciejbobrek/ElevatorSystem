@@ -12,7 +12,8 @@ export class AppComponent {
   title = 'elevator-system';
   elevators:any;
   elevators_without:any;
-
+  intervalId: any = null;
+  isRunning: boolean = false;
   constructor(private elevatorDataService: ElevatorDataService,private elevatorWithoutPeopleDataService: ElevatorRealDataService) {
     this.elevatorDataService.elevators$.subscribe((elevators) => {
       this.elevators = elevators
@@ -34,8 +35,29 @@ export class AppComponent {
       this.elevatorDataService.simulateStep(elevator.id);
     }
     for (var elevator of this.elevators_without){
-      // this.elevatorWithoutPeopleDataService.simulateStep(elevator.id);
-      skip
+      this.elevatorWithoutPeopleDataService.simulateStep(elevator.id)
+    }
+  }
+  startSimulation() {
+    if (!this.isRunning) {
+      this.intervalId = setInterval(() => {
+        this.simulateAll()
+      }, 1500); 
+      this.isRunning = true;
+    }
+  }
+
+  stopSimulation() {
+    if (this.isRunning) {
+      clearInterval(this.intervalId);
+      this.isRunning = false;
+    }
+  }
+  toggleSimulation() {
+    if (this.isRunning) {
+      this.stopSimulation();
+    } else {
+      this.startSimulation();
     }
   }
 }

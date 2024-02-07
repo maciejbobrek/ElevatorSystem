@@ -19,7 +19,9 @@ button:hover {
 .row {
     height: 50px;
 }
-
+p{
+    font-size: large;
+}
 #elevator {
     margin-top: 10px;
     width: 120px;
@@ -85,4 +87,8 @@ button:hover {
     background-color: white;
     border: 1px solid black;
     opacity: 50%;
+}
+#secondbutton{
+    margin-left: 10px;
+    margin-bottom: 10px;
 }

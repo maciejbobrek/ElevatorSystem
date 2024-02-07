@@ -1,12 +1,21 @@
-<div>
+<div class="menu">
   <button class="add-button" (click)="addElevator()">Add Elevator With People</button>
   <button class="add-button" (click)="addElevatorWithoutPeople()">Add Elevator Without People</button>
-  <button class="add-button" (click)="simulateAll()">Simulate All</button>
+  <button class="add-button" (click)="simulateAll()">Step Simulation</button>
+  <div>
+    <button [ngStyle]="{'background-color': !isRunning? '#29a143':'red'}" class="add-button"
+      (click)="toggleSimulation()">
+      <ng-container *ngIf="!isRunning">Start Simulation</ng-container>
+      <ng-container *ngIf="isRunning">Stop Simulation</ng-container>
+    </button>
+  </div>
+</div>
+<div id="content">
   <div id="container">
     <app-elevator class="elevator" *ngFor="let elevator of elevators" [elevator]="elevator"></app-elevator>
   </div>
   <div id="container">
-    <app-elevator-without-people class="elevator" *ngFor="let elevator of elevators_without" [elevator]="elevator"></app-elevator-without-people>
+    <app-elevator-without-people class="elevator" *ngFor="let elevator of elevators_without"
+      [elevator]="elevator"></app-elevator-without-people>
   </div>
-  
 </div>

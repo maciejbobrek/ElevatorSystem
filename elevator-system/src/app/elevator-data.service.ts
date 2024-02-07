@@ -2,6 +2,8 @@
 import { Injectable } from '@angular/core';
 import { Elevator, Person } from './elevator.type';
 import { BehaviorSubject, max } from 'rxjs';
+import  peopleData  from './assets/people-data.json';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,7 +14,7 @@ export class ElevatorDataService {
   private max_elevators = 16;
   private max_people_inside = 9;
   elevators$ = this.elevatorsSubject.asObservable();
-  constructor() { }
+  constructor() { this.loadElevators()}
 
   createElevator(): void {
     if (this.elevatorsSubject.getValue().length < 15) {
@@ -34,6 +36,16 @@ export class ElevatorDataService {
   }
   getFloors() {
     return this.floors;
+  }
+  loadElevators(): void {
+    const elevatorsData: Elevator[] = peopleData.map(elevator => ({
+      id: elevator.id,
+      currentFloor: elevator.currentFloor,
+      targetFloor: elevator.targetFloor,
+      queue: elevator.queue,
+      inside: elevator.inside
+    }));
+    this.elevatorsSubject.next(elevatorsData);
   }
   addToQueue(id: number, person: Person): void {
     const currentElevators = this.elevatorsSubject.getValue();
@@ -77,6 +89,11 @@ export class ElevatorDataService {
     }
     wasgoingup=isLiftGoingUp;
     return null;
+  }
+  deleteElevator(elevatorId: number): void {
+    const currentElevators = this.elevatorsSubject.getValue();
+    const updatedElevators = currentElevators.filter(elevator => elevator.id !== elevatorId);
+    this.notifyDataChange(updatedElevators);
   }
   updateTargetFloor(id: number): void {
     const currentElevators = this.elevatorsSubject.getValue();

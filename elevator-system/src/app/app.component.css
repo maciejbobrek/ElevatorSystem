@@ -8,7 +8,7 @@
 }
   .add-button {
     margin-top: 50px;
-    background-color: #4caf50;
+    background-color:#29a143;
     color: white;
     border: none;
     padding: 10px 15px;
@@ -22,10 +22,28 @@
   }
   
   .add-button:hover {
-    background-color: #45a049;
+   opacity: 50%;
   }
 
   #status-container{
     height: 100px;
 
+  }
+  .menu {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 1000;
+    padding: 10px;
+    justify-content: center; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+  }
+  
+
+  #content {
+   
+    margin-top: 50px; 
   }

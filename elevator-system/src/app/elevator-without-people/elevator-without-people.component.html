@@ -35,13 +35,14 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-1" *ngFor="let i of getFloorsArray()">
-      <button [ngStyle]="{'background-color': checkIfInTargets(i)? 'orange':'gray'}" (click)="addToTargets(i)" type="button" class="btn btn-primary" data-toggle="button"
+    <div id="floorbuttons" class="col-1" *ngFor="let i of getFloorsArray()">
+      <button [ngStyle]="{'background-color': checkIfInTargets(getFloorsArray().length-i-1)? 'orange':'gray'}" (click)="addToTargets(getFloorsArray().length-i-1)" type="button" class="btn btn-primary" data-toggle="button"
         aria-pressed="false" autocomplete="off">
         {{getFloorsArray().length-i-1}}
       </button>
     </div>
   </div>
-  <button (click)="simulateStep()">Symuluj ruch</button>
+  <button id="secondbutton" (click)="simulateStep()">Simulate Move</button>
+  <button id="secondbutton" (click)="deleteElevator()" style="background-color: red;">Delete Elevator</button>
 
 </div>

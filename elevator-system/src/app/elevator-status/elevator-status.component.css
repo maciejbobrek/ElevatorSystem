@@ -1,8 +1,0 @@
-#elevator {
-  width: 200px;
-  /* Dostosuj szerokość windy według potrzeb */
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin: 10px 0;
-  /* Dodatkowy margines na górze i na dole, aby oddzielić windy */
-}
