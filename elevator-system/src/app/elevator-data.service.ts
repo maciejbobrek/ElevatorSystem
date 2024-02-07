@@ -10,9 +10,9 @@ import  peopleData  from './assets/people-data.json';
 export class ElevatorDataService {
   private elevatorsSubject = new BehaviorSubject<Elevator[]>([]);
   private floors = 10;
-  private floor_limit = 3; //max amount of people in queue on one floor
+  private floor_limit = 2; //max amount of people in queue on one floor
   private max_elevators = 16;
-  private max_people_inside = 9;
+  private max_people_inside = 9; // max amount of people inside of elevator
   elevators$ = this.elevatorsSubject.asObservable();
   constructor() { this.loadElevators()}
 

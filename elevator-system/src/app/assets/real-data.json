@@ -1,0 +1,32 @@
+[
+    {
+      "id": 1,
+      "currentFloor": 3,
+      "targetFloor": 7,
+      "pickups": [
+        {"currentFloor": 2, "up": true},
+        {"currentFloor": 5, "up": false}
+      ],
+      "target": [7, 2, 5]
+    },
+    {
+      "id": 2,
+      "currentFloor": 6,
+      "targetFloor": 1,
+      "pickups": [
+        {"currentFloor": 4, "up": false},
+        {"currentFloor": 7, "up": false}
+      ],
+      "target": [1, 4, 7]
+    },
+    {
+      "id": 3,
+      "currentFloor": 0,
+      "targetFloor": 9,
+      "pickups": [
+        {"currentFloor": 1, "up": true},
+        {"currentFloor": 8, "up": true}
+      ],
+      "target": [9, 1, 8]
+    }
+  ]

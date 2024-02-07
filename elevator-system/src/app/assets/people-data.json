@@ -1,0 +1,36 @@
+[
+    {
+      "id": 1,
+      "currentFloor": 3,
+      "targetFloor": 7,
+      "queue": [
+        {"id": 1, "waitingFloor": 2, "targetFloor": 5},
+        {"id": 2, "waitingFloor": 4, "targetFloor": 6}
+      ],
+      "inside": [
+        {"id": 3, "waitingFloor": 3, "targetFloor": 7},
+        {"id": 4, "waitingFloor": 1, "targetFloor": 9}
+      ]
+    },
+    {
+      "id": 2,
+      "currentFloor": 6,
+      "targetFloor": 1,
+      "queue": [],
+      "inside": [
+        {"id": 5, "waitingFloor": 6, "targetFloor": 1},
+        {"id": 6, "waitingFloor": 7, "targetFloor": 2}
+      ]
+    },
+    {
+      "id": 3,
+      "currentFloor": 0,
+      "targetFloor": 9,
+      "queue": [
+        {"id": 7, "waitingFloor": 0, "targetFloor": 5}
+      ],
+      "inside": [
+        {"id": 8, "waitingFloor": 2, "targetFloor": 9}
+      ]
+    }
+  ]
