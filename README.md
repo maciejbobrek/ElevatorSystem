@@ -66,6 +66,13 @@ export interface Elevator {
 
 ```
 ## Algorytm
+
+1.Winda zaczyna się poruszać się w kierunku pierwszego wciśniętego przycisku.
+2. Gdy dotrze do piętra, na którym ten przycisk został wciśnięty w tym samym kierunku którym jedzie winda odznacz ten przycisk.
+- Jeśli nadal są kolejne piętra, które musimy odwiedzić i znajdują się w tym samym kierunku, kontynuuj poruszanie się w tym kierunku.
+- Jeśli nie ma, ale są jeszcze piętra do odwiedzenia, zmień kierunek.
+- Jeśli nie ma więcej pięter do odwiedzenia, zacznij od początku, gdy zostanie ponownie wciśnięty przycisk.
+
 Winda jeździ góra dół, i nigdy nie zawraca. Czyli jeśli pierwszy przycisk na zewnątrz lub w środku został kliknięty winda zaczyna jechać w górę lub w dół. Winda zawsze odwiedza najwyższe piętro docelowe i jedzie w dół na najniższe piętro. Winda nie
 bierze osób(w przypadku pierwszego modelu nie usuwa Requestu z piętra), jeśli jedzie w kierunku przeciwnym niż osoba chce jechać. Usuwa to problem zapychania windy przez osoby nie jadące w dobra stronę. Taki algorytm nigdy nie doprowadzi do styuacji czekania bardzo długo na windę. Winda po zakończeniu wszystkich zleceń zostaje na piętrze.
 
